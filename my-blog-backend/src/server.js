@@ -27,7 +27,7 @@ app.get('/api/articles/:name', async (req,res)=>{
     // await client.connect();
     // const db = client.db('react-blog-db');
     const article = await db.collection('articles').findOne({name});
-
+    console.log(article)
     res.json(article);
 
 })
@@ -47,9 +47,11 @@ app.put('/api/articles/:name/upvote', async (req,res)=>{
     });
 
     const article = await db.collection('articles').findOne({ name });
+
+
+
     if(article){
-        article.upvotes +=1;
-        res.send(`The ${name} article nnow has ${article.upvotes} upvotes!!!`);
+        res.json(article)
 
     }
     else 
@@ -85,8 +87,8 @@ app.post('/api/articles/:name/comments',async (req,res)=>{
     console.log(article);
     if(article){
         console.log(article.comments);
-        res.send(article.comments);
-    }
+        res.json(article);
+    }       
     else 
     res.send("the article\' doesnot finded");
     })
