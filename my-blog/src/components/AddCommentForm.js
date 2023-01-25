@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
+import useUser from '../hooks/useUser'
 const AddCommentForm = ({articleName, onArticleUpdated}) => {
-
+const { user} = useUser();
     const addComment = async () => {
 
         console.log(name," ", commentText);
@@ -22,10 +23,7 @@ const AddCommentForm = ({articleName, onArticleUpdated}) => {
   return (
     <div id="add-comment-form">
     <h3>Add a Comment</h3>
-    <label>
-        Name:
-        <input type="text" value={name} onChange={(event) => setName(event.target.value)} />
-    </label>
+   {user && <p>you are postng as {user.email}</p>}
     <label>
         Comment:
         <textarea rows="4" cols="50" value={commentText} onChange={(event) => setCommentText(event.target.value)} />

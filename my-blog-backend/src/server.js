@@ -1,6 +1,6 @@
 import express from "express";
 import fs from 'fs';
-import { admin } from "firebase-admin";
+import  admin  from 'firebase-admin';
 // import { MongoClient } from 'mongodb'
 import { db, connectToDb } from "./db.js";
 
@@ -19,9 +19,10 @@ import { db, connectToDb } from "./db.js";
 //     upvotes : 0,
 //     comments :[],
 // }]
-
-const credentials = JSON.parse(
-fs.readFileSync('../credentials.json'));
+const file = fs.readFileSync('./credentials.json');
+console.log(file.data);
+const credentials = JSON.parse(file);
+console.log( credentials);
 admin.initializeApp({
     credential : admin.credential.cert(credentials),
 
@@ -36,9 +37,10 @@ app.use(async (req,res,next)=>{
      const user = await admin.auth().verifyIdToken(authtoken);
     req.user = user;}
     catch(e){
-        res.sendStatus(400);
+        return  res.sendStatus(400);
     }
     }
+    req.user = req.user || {};
 next();
 });
 
